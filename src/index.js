@@ -1,6 +1,6 @@
 const functions = require('@google-cloud/functions-framework');
 const fs = require('fs');
-const providers = require('./lib/providers')
+const providers = require('../lib/providers')
 
 
 functions.http('urlShortener', async (req, res) => {
@@ -14,7 +14,7 @@ functions.http('urlShortener', async (req, res) => {
   const redirect = await providers[p](req.params[0])
     .catch((e) => {
       console.error(e)
-      fs.readFile(`${__dirname}/lib/404.html`, 'utf8', (err, data) => {
+      fs.readFile(`${__dirname}/../lib/404.html`, 'utf8', (err, data) => {
         if (err) {
           res.status(500).send('Something went wrong')
           console.log({
@@ -38,7 +38,7 @@ functions.http('urlShortener', async (req, res) => {
   console.log(redirect)
 
   if (!redirect || redirect.size === 0) {
-    fs.readFile(`${__dirname}/lib/404.html`, 'utf8', (err, data) => {
+    fs.readFile(`${__dirname}/../lib/404.html`, 'utf8', (err, data) => {
       if (err) {
         res.status(500).send('Something went wrong')
         console.log({
